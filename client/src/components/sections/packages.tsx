@@ -31,7 +31,7 @@ const packages = [
       "21-day Delivery"
     ],
     buttonText: "Choose Professional",
-    buttonClass: "bg-white text-secondary hover:bg-gray-100",
+    buttonClass: "bg-primary text-white hover:bg-gray-800 border-2 border-white",
     isPopular: true
   },
   {
