@@ -1,27 +1,27 @@
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
-import { Lightbulb, PenTool, Palette, Rocket } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 
 const processSteps = [
   {
-    icon: Lightbulb,
+    icon: "Lightbulb",
     title: "1. Discovery",
     description: "We explore your brand, goals, and target audience to understand your unique needs.",
     color: "bg-secondary"
   },
   {
-    icon: PenTool,
+    icon: "PenTool",
     title: "2. Strategy",
     description: "We develop a creative strategy that aligns with your business objectives.",
     color: "bg-accent"
   },
   {
-    icon: Palette,
+    icon: "Palette",
     title: "3. Creation",
     description: "Our team brings your vision to life with stunning designs and engaging content.",
     color: "bg-success"
   },
   {
-    icon: Rocket,
+    icon: "Rocket",
     title: "4. Launch",
     description: "We deliver polished final assets and provide ongoing support for success.",
     color: "bg-primary"
@@ -45,16 +45,20 @@ export default function Process() {
 
         <div className="grid md:grid-cols-4 gap-8">
           {processSteps.map((step, index) => {
-            const Icon = step.icon;
+            const IconComponent = (LucideIcons as any)[step.icon];
             return (
               <div
                 key={step.title}
-                className={`text-center transition-all duration-700 delay-${index * 200} ${
+                className={`text-center transition-all duration-700 ${
+                  index === 0 ? "" : 
+                  index === 1 ? "delay-200" :
+                  index === 2 ? "delay-500" : "delay-700"
+                } ${
                   isIntersecting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
               >
                 <div className={`w-20 h-20 ${step.color} rounded-full flex items-center justify-center mx-auto mb-6`}>
-                  <Icon className="h-8 w-8 text-white" />
+                  {IconComponent && <IconComponent className="h-8 w-8 text-white" />}
                 </div>
                 <h3 className="text-xl font-semibold text-primary dark:text-white mb-4">
                   {step.title}
