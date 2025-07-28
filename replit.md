@@ -4,6 +4,14 @@
 
 This is a modern, responsive digital agency website built with React, TypeScript, and Tailwind CSS. The application follows a full-stack architecture with a Node.js/Express backend and a React frontend, designed to showcase creative services including graphic design and video editing. The site features a professional agency aesthetic with dark/light mode support, interactive portfolio showcases, and comprehensive contact forms.
 
+## Recent Changes (January 28, 2025)
+
+✓ Fixed navigation visibility issues - navbar brand and menu items now have proper contrast against hero background
+✓ Added semi-transparent navbar background for better readability when not scrolled  
+✓ Fixed "View Our Work" button visibility with background styling
+✓ Resolved missing Process section icons by implementing custom SVG components instead of problematic Lucide imports
+✓ All four process step icons (Discovery, Strategy, Creation, Launch) now display correctly
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
