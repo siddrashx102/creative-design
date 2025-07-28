@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin, Upload, Instagram, Globe, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, Globe, Linkedin } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -16,8 +16,8 @@ export default function Contact() {
     budget: "",
     details: ""
   });
-  const [files, setFiles] = useState<File[]>([]);
   const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const { elementRef, isIntersecting } = useIntersectionObserver();
 
@@ -25,39 +25,98 @@ export default function Contact() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setFiles(Array.from(event.target.files));
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate required fields
+    if (!formData.firstName || !formData.lastName || !formData.email) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Send form data to backend
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for your message! We'll get back to you within 24 hours.",
+        });
+        
+        // Reset form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          projectType: "",
+          budget: "",
+          details: ""
+        });
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for your message! We'll get back to you within 24 hours.",
-    });
     
-    // Reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      projectType: "",
-      budget: "",
-      details: ""
-    });
-    setFiles([]);
-  };
+    if (!newsletterEmail) {
+      toast({
+        title: "Error",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Subscribed!",
-      description: "You've been subscribed to our newsletter.",
-    });
-    setNewsletterEmail("");
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: newsletterEmail }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Subscribed!",
+          description: "You've been subscribed to our newsletter.",
+        });
+        setNewsletterEmail("");
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to subscribe');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to subscribe. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -168,43 +227,14 @@ export default function Contact() {
                 />
               </div>
 
-              <div>
-                <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-                  File Upload
-                </label>
-                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-secondary dark:hover:border-secondary transition-colors cursor-pointer">
-                  <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-600 dark:text-gray-400 mb-2">
-                    Drop files here or click to upload
-                  </p>
-                  <input
-                    type="file"
-                    multiple
-                    accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                    id="file-upload"
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => document.getElementById("file-upload")?.click()}
-                  >
-                    Choose Files
-                  </Button>
-                  {files.length > 0 && (
-                    <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                      {files.length} file(s) selected
-                    </div>
-                  )}
-                </div>
-              </div>
+
 
               <Button
                 type="submit"
-                className="w-full bg-secondary hover:bg-blue-600 text-white py-4 text-lg font-semibold"
+                disabled={isSubmitting}
+                className="w-full bg-secondary hover:bg-blue-600 disabled:opacity-50 text-white py-4 text-lg font-semibold"
               >
-                Send Message
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>
