@@ -1,10 +1,11 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { sendContactNotification, sendContactConfirmation, sendNewsletterConfirmation } from "./email";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission endpoint
-  app.post("/api/contact", (req, res) => {
+  app.post("/api/contact", async (req, res) => {
     try {
       const { firstName, lastName, email, projectType, budget, details } = req.body;
       
@@ -23,23 +24,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Log the contact form submission (in a real app, you'd save to database or send email)
-      console.log("New contact form submission:", {
+      const formData = {
         firstName,
         lastName,
         email,
         projectType,
         budget,
-        details,
+        details
+      };
+
+      // Log the contact form submission
+      console.log("New contact form submission:", {
+        ...formData,
         timestamp: new Date().toISOString()
       });
 
-      // In a real application, you would:
-      // 1. Save to database: await storage.insertContactSubmission(contactData)
-      // 2. Send email notification to admin
-      // 3. Send confirmation email to user
-      // 4. Integrate with CRM system
+      // Send email notifications
+      const [notificationSent, confirmationSent] = await Promise.all([
+        sendContactNotification(formData),
+        sendContactConfirmation(formData)
+      ]);
 
+      if (!notificationSent) {
+        console.error("Failed to send admin notification email");
+      }
+
+      if (!confirmationSent) {
+        console.error("Failed to send confirmation email to user");
+      }
+
+      // Return success even if emails fail (form submission still worked)
       res.status(200).json({ 
         success: true, 
         message: "Contact form submitted successfully" 
@@ -53,7 +67,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Newsletter subscription endpoint
-  app.post("/api/newsletter", (req, res) => {
+  app.post("/api/newsletter", async (req, res) => {
     try {
       const { email } = req.body;
       
@@ -76,6 +90,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         email,
         timestamp: new Date().toISOString()
       });
+
+      // Send confirmation email
+      const confirmationSent = await sendNewsletterConfirmation(email);
+      
+      if (!confirmationSent) {
+        console.error("Failed to send newsletter confirmation email");
+      }
 
       res.status(200).json({ 
         success: true, 
