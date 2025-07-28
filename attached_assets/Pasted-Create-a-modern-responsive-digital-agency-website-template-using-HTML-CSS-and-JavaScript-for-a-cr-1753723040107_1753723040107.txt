@@ -1,0 +1,85 @@
+Create a modern, responsive digital agency website template using HTML, CSS, and JavaScript for a creative agency specializing in graphic design and video editing services. The website should be optimized for ThemeForest submission and client acquisition.
+
+AGENCY-SPECIFIC REQUIREMENTS:
+- Professional agency branding with bold, creative aesthetics suitable for a digital creative studio
+- Team-focused design highlighting agency expertise and collaborative approach
+- Client-centric layout designed to showcase services, process, and results
+- Modern color scheme using CSS custom properties (primary: #2d3748, secondary: #4299e7, accent: #ed8936, success: #38a169)
+- Dark/light mode toggle with agency branding consistency
+- Mobile-first responsive design optimized for creative content display
+
+TECHNICAL SPECIFICATIONS:
+- Valid HTML5 semantic markup with proper accessibility
+- CSS3 with custom properties, animations, and grid/flexbox layouts
+- Vanilla JavaScript for all interactivity (no external frameworks)
+- Fast loading times with optimized video and image assets
+- Cross-browser compatibility and W3C validation ready
+- SEO-optimized structure for digital agency visibility
+
+AGENCY WEBSITE SECTIONS:
+1. **Hero Section**: Dynamic video background or animated graphics showcase, agency tagline, key services highlight, and prominent "Get Quote" CTA
+2. **Agency Overview**: Brief agency story, mission, and unique value proposition with engaging visuals
+3. **Services Section**: 
+   - Graphic Design services (branding, logo design, print materials, digital graphics)
+   - Video Editing services (promotional videos, social media content, corporate videos, motion graphics)
+   - Interactive service cards with hover effects and "Learn More" links
+4. **Portfolio Showcase**: 
+   - Filterable gallery with categories: Graphic Design, Video Production, Branding, Motion Graphics
+   - High-quality project thumbnails with lightbox/modal functionality
+   - Case study previews with client names and project results
+5. **Agency Process**: Step-by-step workflow presentation showing how the agency works with clients
+6. **Team Section**: Professional team member profiles with roles, expertise, and social links
+7. **Client Testimonials**: Carousel/slider featuring client quotes, company logos, and project outcomes
+8. **Services Packages**: Pricing tiers or service packages with feature comparisons
+9. **Contact & CTA**: Multi-channel contact options, project inquiry form, and social media integration
+
+INTERACTIVE FEATURES:
+- Smooth scrolling navigation with section highlighting
+- Video portfolio with play/pause controls and fullscreen options
+- Before/after sliders for design projects
+- Interactive service filters and category sorting
+- Animated counters for agency statistics (projects completed, clients served, etc.)
+- Contact form with project type selection and file upload capability
+- Loading animations and micro-interactions throughout
+- Scroll-triggered animations using Intersection Observer API
+
+AGENCY PORTFOLIO FEATURES:
+- Grid layout optimized for showcasing both static designs and video content
+- Video thumbnails with play overlays and duration indicators
+- Project category filtering (Logo Design, Web Graphics, Social Media, Corporate Videos, etc.)
+- Detailed project modals showing design process, tools used, and client feedback
+- Download-ready design samples and video showreels
+- Client logo wall displaying agency's diverse clientele
+
+MODERN AGENCY ELEMENTS:
+- CSS animations for service icons and team photos
+- Parallax scrolling effects for hero and testimonial sections
+- Interactive timeline showing agency milestones and growth
+- Blog section for design tips and industry insights
+- Social proof elements (awards, certifications, client count)
+- Newsletter signup for design and video editing tips
+- Live chat integration for instant client communication
+
+FILE STRUCTURE:
+- index.html (agency homepage)
+- css/agency-style.css (comprehensive agency styling)
+- js/agency-script.js (all interactive functionality)
+- assets/videos/ (demo videos and background content)
+- assets/images/ (portfolio samples, team photos, client logos)
+- Complete documentation for agency customization
+
+RESPONSIVE DESIGN:
+- Mobile: 320px - 768px (optimized for service browsing)
+- Tablet: 768px - 1024px (portfolio showcase focus) 
+- Desktop: 1024px+ (full agency experience)
+
+CONTENT FOR DEMO:
+Create professional placeholder content for a graphic design and video editing agency including:
+- Sample portfolio projects for both graphic design and video editing
+- Team member profiles with realistic roles (Creative Director, Senior Designer, Video Editor, etc.)
+- Client testimonials from various industries
+- Service descriptions with competitive pricing
+- Agency background story and mission statement
+- Contact information and social media links
+
+Ensure all code is production-ready, well-documented, and suitable for immediate deployment by a digital agency seeking to establish a strong online presence and attract high-quality clients.
