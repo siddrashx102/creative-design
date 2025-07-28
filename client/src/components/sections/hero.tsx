@@ -89,7 +89,7 @@ export default function Hero() {
           <Button
             variant="outline"
             size="lg"
-            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-semibold transition-all"
+            className="border-2 border-white text-white bg-white/10 backdrop-blur-sm hover:bg-white hover:text-primary px-8 py-4 text-lg font-semibold transition-all"
             onClick={() => document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })}
           >
             View Our Work

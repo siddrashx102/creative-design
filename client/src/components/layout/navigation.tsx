@@ -59,12 +59,14 @@ export default function Navigation() {
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isScrolled 
         ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700" 
-        : "bg-transparent"
+        : "bg-black/30 backdrop-blur-sm"
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-primary dark:text-white">
+            <h1 className={`text-2xl font-bold transition-colors ${
+              isScrolled ? "text-primary dark:text-white" : "text-white"
+            }`}>
               CreativeStudio
             </h1>
           </div>
@@ -76,10 +78,12 @@ export default function Navigation() {
                 <button
                   key={item.href}
                   onClick={() => scrollToSection(item.href)}
-                  className={`transition-colors ${
+                  className={`transition-colors font-medium ${
                     activeSection === item.href.substring(1)
-                      ? "text-secondary"
-                      : "text-gray-900 dark:text-gray-300 hover:text-secondary dark:hover:text-secondary"
+                      ? "text-accent"
+                      : isScrolled 
+                        ? "text-gray-900 dark:text-gray-300 hover:text-secondary dark:hover:text-secondary"
+                        : "text-white hover:text-accent"
                   }`}
                 >
                   {item.label}
@@ -93,7 +97,11 @@ export default function Navigation() {
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+              className={`p-2 rounded-lg transition-colors ${
+                isScrolled 
+                  ? "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : "bg-white/20 backdrop-blur-sm text-white hover:bg-white/30"
+              }`}
             >
               {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </Button>
@@ -101,7 +109,15 @@ export default function Navigation() {
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className={`md:hidden ${
+                    isScrolled 
+                      ? "text-gray-600 dark:text-gray-400" 
+                      : "text-white"
+                  }`}
+                >
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
