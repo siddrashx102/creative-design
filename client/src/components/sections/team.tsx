@@ -18,7 +18,7 @@ const teamMembers = [
     name: "Sarah Johnson",
     role: "Senior Designer",
     bio: "Specializes in digital design and user experience with award-winning projects",
-    image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300",
     color: "text-accent",
     socials: [
       { icon: Linkedin, href: "#" },
@@ -75,11 +75,16 @@ export default function Team() {
                 isIntersecting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
-              <div className="team-image w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden">
+              <div className="team-image w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-600">
                 <img
                   src={member.image}
                   alt={`${member.name} headshot`}
                   className="w-full h-full object-cover transition-transform duration-300"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    target.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center text-4xl">${member.name.split(' ').map(n => n[0]).join('')}</div>`;
+                  }}
                 />
               </div>
               <h3 className="text-xl font-semibold text-primary dark:text-white mb-2">
