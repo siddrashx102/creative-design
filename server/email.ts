@@ -1,22 +1,28 @@
 import nodemailer from 'nodemailer';
 
-// Create Gmail transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
+// Create Gmail transporter only if credentials are provided
+let transporter: nodemailer.Transporter | null = null;
 
-// Verify transporter configuration
-transporter.verify((error: any, success: any) => {
-  if (error) {
-    console.error('Email configuration error:', error);
-  } else {
-    console.log('Email server is ready to send messages');
-  }
-});
+if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+  transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
+
+  // Verify transporter configuration
+  transporter.verify((error: any, success: any) => {
+    if (error) {
+      console.error('Email configuration error:', error);
+    } else {
+      console.log('Email server is ready to send messages');
+    }
+  });
+} else {
+  console.log('Email credentials not provided - email functionality disabled');
+}
 
 interface ContactFormData {
   firstName: string;
@@ -28,6 +34,11 @@ interface ContactFormData {
 }
 
 export async function sendContactNotification(formData: ContactFormData): Promise<boolean> {
+  if (!transporter) {
+    console.log('Email not configured - contact notification not sent');
+    return false;
+  }
+  
   try {
     const mailOptions = {
       from: process.env.GMAIL_USER,
@@ -76,6 +87,11 @@ export async function sendContactNotification(formData: ContactFormData): Promis
 }
 
 export async function sendContactConfirmation(formData: ContactFormData): Promise<boolean> {
+  if (!transporter) {
+    console.log('Email not configured - contact confirmation not sent');
+    return false;
+  }
+  
   try {
     const mailOptions = {
       from: process.env.GMAIL_USER,
@@ -140,6 +156,11 @@ export async function sendContactConfirmation(formData: ContactFormData): Promis
 }
 
 export async function sendNewsletterConfirmation(email: string): Promise<boolean> {
+  if (!transporter) {
+    console.log('Email not configured - newsletter confirmation not sent');
+    return false;
+  }
+  
   try {
     const mailOptions = {
       from: process.env.GMAIL_USER,

@@ -79,9 +79,14 @@ Add these environment variables in your Render service settings:
 ### Database Variables (if using database):
 - `DATABASE_URL` = (provided by your Render PostgreSQL service)
 
-### Email Variables (if using contact forms):
+### Email Variables (Optional - for contact forms):
 - `GMAIL_USER` = `your-gmail@gmail.com`
-- `GMAIL_PASS` = `your-app-password`
+- `GMAIL_APP_PASSWORD` = `your-gmail-app-password`
+
+**Note:** The app will work perfectly without email configuration. Contact forms will still function, but emails won't be sent. To enable email functionality, you'll need to:
+1. Enable 2-Factor Authentication on your Gmail account
+2. Generate an App Password (not your regular password)
+3. Add both GMAIL_USER and GMAIL_APP_PASSWORD environment variables
 
 ## Step 5: Update Your Application (if needed)
 
@@ -121,9 +126,11 @@ Your application is already configured correctly for Render deployment, but here
    - Verify DATABASE_URL is correctly set
    - Ensure database is running and accessible
 
-4. **Email Not Working:**
-   - Verify email environment variables are set
-   - Check if your email provider requires app-specific passwords
+4. **Email Configuration Errors:**
+   - **Error: "Missing credentials for PLAIN"** - This is normal if email credentials aren't set up yet
+   - The app works perfectly without email - this error can be ignored if you don't need email functionality
+   - To enable email: Set GMAIL_USER and GMAIL_APP_PASSWORD environment variables
+   - Use Gmail App Password (not your regular password) - requires 2FA enabled
 
 ### Performance Tips:
 
