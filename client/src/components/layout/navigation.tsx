@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useTheme } from "@/hooks/use-theme";
-import { Menu, Sun, Moon } from "lucide-react";
+import { Menu, Sun, Moon, BookOpen } from "lucide-react";
+import { Link, useLocation } from "wouter";
 
 const navItems = [
   { href: "#hero", label: "Home" },
@@ -15,7 +16,10 @@ const navItems = [
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState("hero");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [location] = useLocation();
   const { theme, setTheme } = useTheme();
+  
+  const isDocumentationPage = location === "/documentation";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,7 +78,7 @@ export default function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              {navItems.map((item) => (
+              {!isDocumentationPage && navItems.map((item) => (
                 <button
                   key={item.href}
                   onClick={() => scrollToSection(item.href)}
@@ -89,6 +93,23 @@ export default function Navigation() {
                   {item.label}
                 </button>
               ))}
+              
+              {/* Documentation Link */}
+              <Link href="/documentation">
+                <Button 
+                  variant="ghost" 
+                  className={`gap-2 font-medium ${
+                    isDocumentationPage
+                      ? "text-accent"
+                      : isScrolled 
+                        ? "text-gray-900 dark:text-gray-300 hover:text-secondary dark:hover:text-secondary"
+                        : "text-white hover:text-accent"
+                  }`}
+                >
+                  <BookOpen className="h-4 w-4" />
+                  Documentation
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -123,7 +144,7 @@ export default function Navigation() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <nav className="flex flex-col space-y-4 mt-8">
-                  {navItems.map((item) => (
+                  {!isDocumentationPage && navItems.map((item) => (
                     <button
                       key={item.href}
                       onClick={() => scrollToSection(item.href)}
@@ -136,6 +157,21 @@ export default function Navigation() {
                       {item.label}
                     </button>
                   ))}
+                  
+                  {/* Documentation Link for Mobile */}
+                  <Link href="/documentation">
+                    <Button 
+                      variant="ghost" 
+                      className={`w-full justify-start gap-2 px-3 py-2 ${
+                        isDocumentationPage
+                          ? "text-secondary"
+                          : "text-gray-900 dark:text-gray-300 hover:text-secondary"
+                      }`}
+                    >
+                      <BookOpen className="h-4 w-4" />
+                      Documentation
+                    </Button>
+                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>
