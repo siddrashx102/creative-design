@@ -44,7 +44,7 @@ If your app uses a database, you'll need to set up a PostgreSQL database on Rend
 3. **Configure the Service:**
    - **Name:** creativestudio-agency (or your preferred name)
    - **Environment:** Node
-   - **Build Command:** `npm install && npm run build`
+   - **Build Command:** `npm ci --include=dev && npm run build`
    - **Start Command:** `npm start`
    - **Plan:** Free (or choose paid for better performance)
 
@@ -108,8 +108,9 @@ Your application is already configured correctly for Render deployment, but here
 ### Common Issues:
 
 1. **Build Fails:**
+   - **"vite: not found" error:** Use build command `npm ci --include=dev && npm run build`
    - Check that all dependencies are in package.json
-   - Verify build command is correct: `npm install && npm run build`
+   - Verify dev dependencies are installed during build process
 
 2. **App Doesn't Start:**
    - Check start command: `npm start`
