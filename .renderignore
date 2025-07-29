@@ -1,0 +1,28 @@
+# Files and directories to ignore during Render deployment
+.git
+.gitignore
+README.md
+.env
+.env.local
+.env.example
+node_modules
+.replit
+replit.md
+attached_assets
+DEPLOYMENT.md
+
+# Development files
+*.log
+*.tgz
+.DS_Store
+.vscode
+.idea
+
+# Test files
+test/
+tests/
+__tests__/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
