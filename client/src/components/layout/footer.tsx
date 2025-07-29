@@ -1,5 +1,4 @@
 import { Instagram, Globe, Linkedin } from "lucide-react";
-import { Link } from "wouter";
 
 const footerSections = [
   {
@@ -18,7 +17,6 @@ const footerSections = [
       "About Us",
       "Our Team",
       "Portfolio",
-      "Documentation",
       "Careers",
       "Blog"
     ]
@@ -74,17 +72,9 @@ export default function Footer() {
               <ul className="space-y-3 text-gray-300">
                 {section.links.map((link) => (
                   <li key={link}>
-                    {link === "Documentation" ? (
-                      <Link href="/documentation">
-                        <span className="hover:text-white transition-colors cursor-pointer">
-                          {link}
-                        </span>
-                      </Link>
-                    ) : (
-                      <a href="#" className="hover:text-white transition-colors">
-                        {link}
-                      </a>
-                    )}
+                    <a href="#" className="hover:text-white transition-colors">
+                      {link}
+                    </a>
                   </li>
                 ))}
               </ul>

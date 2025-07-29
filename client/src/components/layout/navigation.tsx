@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useTheme } from "@/hooks/use-theme";
-import { Menu, Sun, Moon, BookOpen } from "lucide-react";
-import { Link, useLocation } from "wouter";
+import { Menu, Sun, Moon } from "lucide-react";
+import { useLocation } from "wouter";
 
 const navItems = [
   { href: "#hero", label: "Home" },
@@ -93,23 +93,6 @@ export default function Navigation() {
                   {item.label}
                 </button>
               ))}
-              
-              {/* Documentation Link */}
-              <Link href="/documentation">
-                <Button 
-                  variant="ghost" 
-                  className={`gap-2 font-medium ${
-                    isDocumentationPage
-                      ? "text-accent"
-                      : isScrolled 
-                        ? "text-gray-900 dark:text-gray-300 hover:text-secondary dark:hover:text-secondary"
-                        : "text-white hover:text-accent"
-                  }`}
-                >
-                  <BookOpen className="h-4 w-4" />
-                  Documentation
-                </Button>
-              </Link>
             </div>
           </div>
 
@@ -157,21 +140,6 @@ export default function Navigation() {
                       {item.label}
                     </button>
                   ))}
-                  
-                  {/* Documentation Link for Mobile */}
-                  <Link href="/documentation">
-                    <Button 
-                      variant="ghost" 
-                      className={`w-full justify-start gap-2 px-3 py-2 ${
-                        isDocumentationPage
-                          ? "text-secondary"
-                          : "text-gray-900 dark:text-gray-300 hover:text-secondary"
-                      }`}
-                    >
-                      <BookOpen className="h-4 w-4" />
-                      Documentation
-                    </Button>
-                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>
